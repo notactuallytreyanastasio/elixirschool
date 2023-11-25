@@ -89,3 +89,6 @@ Temporary Items
 # intelliJ idea And other editors
 .idea
 *.iml
+
+# dont show my scripts for screencasting in the git diff
+scripts/

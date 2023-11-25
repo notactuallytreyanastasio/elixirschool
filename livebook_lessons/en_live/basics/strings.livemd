@@ -1,3 +1,7 @@
+# Strings/Binaries
+
+## Section
+
 %{
   version: "1.2.0",
   title: "Strings",
@@ -5,6 +9,7 @@
   Strings, Char Lists, Graphemes and Codepoints.
   """
 }
+
 ---
 
 ## Strings
@@ -13,16 +18,15 @@ Elixir strings are nothing but a sequence of bytes.
 Let's look at an example:
 
 ```elixir
-iex> string = <<104,101,108,108,111>>
-"hello"
-iex> string <> <<0>>
-<<104, 101, 108, 108, 111, 0>>
+string = <<104, 101, 108, 108, 111>> |> IO.inspect()
+(string <> <<0>>) |> IO.inspect()
+[1, 3, 4] |> IO.inspect()
 ```
 
 By concatenating the string with the byte `0`, IEx displays the string as a binary because it is not a valid string anymore.
 This trick can help us view the underlying bytes of any string.
 
->NOTE: Using << >> syntax we are saying to the compiler that the elements inside those symbols are bytes.
+> NOTE: Using << >> syntax we are saying to the compiler that the elements inside those symbols are bytes.
 
 ## Charlists
 
@@ -34,10 +38,8 @@ What's the difference? Each value in a charlist is the Unicode code point of a c
 Let's dig in:
 
 ```elixir
-iex> 'hełło'
-[104, 101, 322, 322, 111]
-iex> "hełło" <> <<0>>
-<<104, 101, 197, 130, 197, 130, 111, 0>>
+~c"hełło" |> IO.inspect()
+("hełło" <> <<0>>) |> IO.inspect()
 ```
 
 `322` is the Unicode codepoint for ł but it is encoded in UTF-8 as the two bytes `197`, `130`.
@@ -45,8 +47,7 @@ iex> "hełło" <> <<0>>
 You can get a character’s code point by using `?`
 
 ```elixir
-iex> ?Z
-90
+?Z |> IO.inspect()
 ```
 
 This allows you to use the notation `?Z` rather than 'Z' for a symbol.
@@ -68,14 +69,11 @@ The String module already provides two functions to obtain them, `graphemes/1` a
 Let's look at an example:
 
 ```elixir
-iex> string = "\u0061\u0301"
-"á"
+string = "\u0061\u0301" |> IO.inspect()
 
-iex> String.codepoints string
-["a", "́"]
+String.codepoints(string) |> IO.inspect()
 
-iex> String.graphemes string
-["á"]
+String.graphemes(string) |> IO.inspect()
 ```
 
 ## String Functions
@@ -89,8 +87,7 @@ To see a complete set of functions visit the official [`String`](https://hexdocs
 Returns the number of Graphemes in the string.
 
 ```elixir
-iex> String.length "Hello"
-5
+String.length("Hello") |> IO.inspect()
 ```
 
 ### replace/3
@@ -98,8 +95,7 @@ iex> String.length "Hello"
 Returns a new string replacing a current pattern in the string with some new replacement string.
 
 ```elixir
-iex> String.replace("Hello", "e", "a")
-"Hallo"
+String.replace("Hello", "e", "a") |> IO.inspect()
 ```
 
 ### duplicate/2
@@ -107,8 +103,7 @@ iex> String.replace("Hello", "e", "a")
 Returns a new string repeated n times.
 
 ```elixir
-iex> String.duplicate("Oh my ", 3)
-"Oh my Oh my Oh my "
+String.duplicate("Oh my ", 3)
 ```
 
 ### split/2
@@ -116,8 +111,7 @@ iex> String.duplicate("Oh my ", 3)
 Returns a list of strings split by a pattern.
 
 ```elixir
-iex> String.split("Hello World", " ")
-["Hello", "World"]
+String.split("Hello World", " ") |> IO.inspect()
 ```
 
 ## Exercise
@@ -129,8 +123,8 @@ Let's walk through a simple exercise to demonstrate we are ready to go with Stri
 A and B are considered anagrams if there's a way to rearrange A or B making them equal.
 For example:
 
-+ A = super
-+ B = perus
+* A = super
+* B = perus
 
 If we re-arrange the characters on String A, we can get the string B, and vice versa.
 
@@ -164,25 +158,14 @@ Pretty straightforward, right?
 Let's check the output on iex:
 
 ```elixir
-iex> Anagram.anagrams?("Hello", "ohell")
+Anagram.anagrams?("Hello", "ohell") |> IO.inspect()
 true
 
-iex> Anagram.anagrams?("María", "íMara")
+Anagram.anagrams?("María", "íMara") |> IO.inspect()
 true
 
-iex> Anagram.anagrams?(3, 5)
-** (FunctionClauseError) no function clause matching in Anagram.anagrams?/2
-
-    The following arguments were given to Anagram.anagrams?/2:
-
-        # 1
-        3
-
-        # 2
-        5
-
-    iex:11: Anagram.anagrams?/2
+Anagram.anagrams?(3, 5)
 ```
 
-As you can see, the last call to `anagrams?` caused a FunctionClauseError.
+As you can see, the last call to `anagrams?` caused a `FunctionClauseError`.
 This error is telling us that there is no function in our module that meets the pattern of receiving two non-binary arguments, and that's exactly what we want, to just receive two strings, and nothing more.
