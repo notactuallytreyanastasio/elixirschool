@@ -5,275 +5,264 @@
   Getting started, basic data types, and basic operations.
   """
 }
+
 ---
 
-## Getting Started
+## TODO separate install guide that gets livebook too
 
-### Installing Elixir
+## TODO explain IO.inspect additions that will be present everywhere
+
+## TODO figure out linking out to next lessons using localhost + filenames
+
+## TODO think about all this when offering options on the website in the other app (Schoolhouse)
+
+## TODO explain paren use that has to happen some places
+
+## TODO think of more TODOs
+
+### Getting Started
+
+#### Installing Elixir
 
 Installation instructions for each OS can be found on elixir-lang.org in the [Installing Elixir](http://elixir-lang.org/install.html) guide.
 
 After Elixir is installed, you can easily find the installed version.
 
-    % elixir -v
-    Erlang/OTP {{ site.erlang.OTP }} [erts-{{ site.erlang.erts }}] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+```
+% elixir -v
+Erlang/OTP {{ site.erlang.OTP }} [erts-{{ site.erlang.erts }}] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-    Elixir {{ site.elixir.version }}
+Elixir {{ site.elixir.version }}
+```
 
-### Trying Interactive Mode
+## TODO change to be about livebook
+
+#### Trying Interactive Mode
 
 Elixir comes with IEx, an interactive shell, which allows us to evaluate Elixir expressions as we go.
 
 To get started, let's run `iex`:
 
-    Erlang/OTP {{ site.erlang.OTP }} [erts-{{ site.erlang.erts }}] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+```
+Erlang/OTP {{ site.erlang.OTP }} [erts-{{ site.erlang.erts }}] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-    Interactive Elixir ({{ site.elixir.version }}) - press Ctrl+C to exit (type h() ENTER for help)
-    iex>
+Interactive Elixir ({{ site.elixir.version }}) - press Ctrl+C to exit (type h() ENTER for help)
+iex>
+```
 
 Note: On Windows PowerShell, you need to type `iex.bat`.
 
 Let's go ahead and give it a try now by typing in a few simple expressions:
 
 ```elixir
-iex> 2+3
-5
-iex> 2+3 == 5
-true
-iex> String.length("The quick brown fox jumps over the lazy dog")
-43
+(2 + 3) |> IO.inspect()
+2 + 3 == 5 |> IO.inspect()
+String.length("The quick brown fox jumps over the lazy dog") |> IO.inspect()
 ```
 
 Don't worry if you don't understand every expression yet, but we hope you get the idea.
 
-## Basic Data Types
+### Basic Data Types
 
-### Integers
+#### Integers
 
 ```elixir
-iex> 255
-255
+255 |> IO.inspect()
 ```
 
 Support for binary, octal, and hexadecimal numbers comes built in:
 
 ```elixir
-iex> 0b0110
-6
-iex> 0o644
-420
-iex> 0x1F
-31
+0b0110 |> IO.inspect()
+0o644 |> IO.inspect()
+0x1F |> IO.inspect()
 ```
 
-### Floats
+#### Floats
+
+## TODO turn off errors for the below cell to allow continuing or add a note about it
 
 In Elixir, floating point numbers require a decimal after at least one digit; they have 64-bit double precision and support `e` for exponent values:
 
 ```elixir
-iex> 3.14
-3.14
-iex> .14
-** (SyntaxError) iex:2: syntax error before: '.'
-iex> 1.0e-10
-1.0e-10
+3.14 |> IO.inspect
+.14 |> IO.inspect
+# ** (SyntaxError) iex:2: syntax error before: '.'
+1.0e-10 |> IO.inspect
 ```
 
-### Booleans
+#### Booleans
 
 Elixir supports `true` and `false` as booleans; everything is truthy except for `false` and `nil`:
 
 ```elixir
-iex> true
 true
-iex> false
 false
 ```
 
-### Atoms
+#### Atoms
 
 An atom is a constant whose name is its value.
 If you're familiar with Ruby, these are synonymous with Symbols:
 
 ```elixir
-iex> :foo
-:foo
-iex> :foo == :bar
-false
+:foo |> IO.inspect()
+:foo == :bar |> IO.inspect()
 ```
 
 The booleans `true` and `false` are also the atoms `:true` and `:false`, respectively.
 
 ```elixir
-iex> is_atom(true)
-true
-iex> is_boolean(:true)
-true
-iex> :true === true
-true
+is_atom(true) |> IO.inspect()
+is_boolean(true) |> IO.inspect()
+true === true |> IO.inspect()
 ```
 
 Names of modules in Elixir are also atoms. `MyApp.MyModule` is a valid atom, even if no such module has been declared yet.
 
 ```elixir
-iex> is_atom(MyApp.MyModule)
-true
+is_atom(MyApp.MyModule) |> IO.inspect()
 ```
 
 Atoms are also used to reference modules from Erlang libraries, including built in ones.
 
 ```elixir
-iex> :crypto.strong_rand_bytes 3
-<<23, 104, 108>>
+:crypto.strong_rand_bytes(3) |> IO.inspect()
 ```
 
-### Strings
+#### Strings
 
 Strings in Elixir are UTF-8 encoded and are wrapped in double quotes:
 
 ```elixir
-iex> "Hello"
-"Hello"
-iex> "dziękuję"
-"dziękuję"
+"Hello" |> IO.inspect()
+"dziękuję" |> IO.inspect()
 ```
 
 Strings support line breaks and escape sequences:
 
 ```elixir
-iex> "foo
-...> bar"
-"foo\nbar"
-iex> "foo\nbar"
-"foo\nbar"
+"foo
+bar" |> IO.inspect()
+"foo\nbar" |> IO.inspect()
 ```
 
 Elixir also includes more complex data types.
 We'll learn more about these when we learn about [collections](/en/lessons/basics/collections) and [functions](/en/lessons/basics/functions).
 
-## Basic Operations
+### Basic Operations
 
-### Arithmetic
+#### Arithmetic
 
 Elixir supports the basic operators `+`, `-`, `*`, and `/` as you would expect.
 It's important to remember that `/` will always return a float:
 
 ```elixir
-iex> 2 + 2
-4
-iex> 2 - 1
-1
-iex> 2 * 5
-10
-iex> 10 / 5
-2.0
+(2 + 2) |> IO.inspect()
+(2 - 1) |> IO.inspect()
+(2 * 5) |> IO.inspect()
+(10 / 5) |> IO.inspect()
 ```
 
 If you need integer division or the division remainder (i.e., modulo), Elixir comes with two helpful functions to achieve this:
 
 ```elixir
-iex> div(10, 5)
-2
-iex> rem(10, 3)
-1
+div(10, 5) |> IO.inspect()
+rem(10, 3) |> IO.inspect()
 ```
 
-### Boolean
+#### Boolean
 
 Elixir provides the `||`, `&&`, and `!` boolean operators.
 These support any types:
 
 ```elixir
-iex> -20 || true
--20
-iex> false || 42
-42
-
-iex> 42 && true
-true
-iex> 42 && nil
-nil
-
-iex> !42
-false
-iex> !false
-true
+-20 || true |> IO.inspect()
+false || 42 |> IO.inspect()
+42 && true |> IO.inspect()
+42 && nil |> IO.inspect()
+!42 |> IO.inspect()
+!false |> IO.inspect()
 ```
 
 There are three additional operators whose first argument _must_ be a boolean (`true` or `false`):
 
+<!-- livebook:{"break_markdown":true} -->
+
+### Make sure to double click the below code cell, then click the gear icon, and check "continue on error" so that this can run without interfering with subsequent cells
+
+<!-- livebook:{"continue_on_error":true,"reevaluate_automatically":true} -->
+
 ```elixir
-iex> true and 42
-42
-iex> false or true
-true
-iex> not false
-true
-iex> 42 and true
-** (BadBooleanError) expected a boolean on left-side of "and", got: 42
-iex> not 42
-** (ArgumentError) argument error
+(true and 42) |> IO.inspect()
+(false or true) |> IO.inspect()
+not false |> IO.inspect()
+(42 and true) |> IO.inspect()
+# ** (BadBooleanError) expected a boolean on left-side of "and", got: 42
+not 42 |> IO.inspect()
+# ** (ArgumentError) argument error
 ```
 
 Note: Elixir's `and` and `or` actually map to `andalso` and `orelse` in Erlang.
 
-### Comparison
+#### Comparison
 
 Elixir comes with all the comparison operators we're used to: `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<`, and `>`.
 
 ```elixir
-iex> 1 > 2
-false
-iex> 1 != 2
-true
-iex> 2 == 2
-true
-iex> 2 <= 3
-true
+1 > 2 |> IO.inspect()
+1 != 2 |> IO.inspect()
+2 == 2 |> IO.inspect()
+2 <= 3 |> IO.inspect()
 ```
 
 For strict comparison of integers and floats, use `===`:
 
 ```elixir
-iex> 2 == 2.0
-true
-iex> 2 === 2.0
-false
+2 == 2.0 |> IO.inspect()
+2 === 2.0 |> IO.inspect()
 ```
 
 An important feature of Elixir is that any two types can be compared; this is particularly useful in sorting. We don't need to memorize the sort order, but it is important to be aware of it:
 
-```elixir
+<!-- livebook:{"break_markdown":true} -->
+
+```
 number < atom < reference < function < port < pid < tuple < map < list < bitstring
 ```
+
+<!-- livebook:{"break_markdown":true} -->
 
 This can lead to some interesting, yet valid comparisons you may not find in other languages:
 
 ```elixir
-iex> :hello > 999
-true
-iex> {:hello, :world} > [1, 2, 3]
-false
+:hello > 999 |> IO.inspect()
+{:hello, :world} > [1, 2, 3] |> IO.inspect()
 ```
 
-### String Interpolation
+#### String Interpolation
 
 If you've used Ruby, string interpolation in Elixir will look familiar:
 
 ```elixir
-iex> name = "Sean"
-"Sean"
-iex> "Hello #{name}"
-"Hello Sean"
+name = "Sean" |> IO.inspect()
+"Hello #{name}" |> IO.inspect()
 ```
 
-### String Concatenation
+#### String Concatenation
 
 String concatenation uses the `<>` operator:
 
 ```elixir
-iex> name = "Sean"
-"Sean"
-iex> "Hello " <> name
-"Hello Sean"
+name = "Sean" |> IO.inspect()
+("Hello " <> name) |> IO.inspect()
 ```
+
+```elixir
+path = File.cwd!() <> "/" <> "livebook_lessons/basics/collections.livemd"
+IO.puts("[Next Lesson: Collections](#{path})")
+path
+File.cwd()
+```
+
+[Next Chapter: Collections]("file://collections.livemd")

@@ -1,18 +1,11 @@
-%{
-  version: "1.3.1",
-  title: "Collections",
-  excerpt: """
-  Lists, tuples, keyword lists, and maps.
-  """
-}
----
+Certainly! Here is the passage in pure markdown format for easy copy/paste:
 
+```markdown
 ## Lists
 
 Lists are simple collections of values which may include multiple types; lists may also include non-unique values:
 
 ```elixir
-iex> [3.14, :pie, "Apple"]
 [3.14, :pie, "Apple"]
 ```
 
@@ -21,14 +14,11 @@ This means that accessing the list length is an operation that will run in linea
 For this reason, it is typically faster to prepend than to append:
 
 ```elixir
-iex> list = [3.14, :pie, "Apple"]
-[3.14, :pie, "Apple"]
+list = [3.14, :pie, "Apple"]
 # Prepending (fast)
-iex> ["π" | list]
-["π", 3.14, :pie, "Apple"]
+["π" | list]
 # Appending (slow)
-iex> list ++ ["Cherry"]
-[3.14, :pie, "Apple", "Cherry"]
+list ++ ["Cherry"]
 ```
 
 ### List Concatenation
@@ -36,8 +26,7 @@ iex> list ++ ["Cherry"]
 List concatenation uses the `++/2` operator:
 
 ```elixir
-iex> [1, 2] ++ [3, 4, 1]
-[1, 2, 3, 4, 1]
+[1, 2] ++ [3, 4, 1]
 ```
 
 A side note about the name (`++/2`) format used above:
@@ -51,24 +40,22 @@ Arity and the given name are combined with a slash. We'll talk more about this l
 Support for subtraction is provided via the `--/2` operator; it's safe to subtract a missing value:
 
 ```elixir
-iex> ["foo", :bar, 42] -- [42, "bar"]
-["foo", :bar]
+["foo", :bar, 42] -- [42, "bar"]
 ```
 
 Be mindful of duplicate values.
 For every element on the right, the first occurrence of it gets removed from the left:
 
 ```elixir
-iex> [1,2,2,3,2,3] -- [1,2,3,2]
-[2, 3]
+[1,2,2,3,2,3] -- [1,2,3,2]
 ```
 
 **Note:** List subtraction uses [strict comparison](/en/lessons/basics/basics#comparison) to match the values. For example:
 
 ```elixir
-iex> [2] -- [2.0]
+[2] -- [2.0]
 [2]
-iex> [2.0] -- [2.0]
+[2.0] -- [2.0]
 []
 ```
 
@@ -79,21 +66,16 @@ The head is the list's first element, while the tail is a list containing the re
 Elixir provides two helpful functions, `hd` and `tl`, for working with these parts:
 
 ```elixir
-iex> hd [3.14, :pie, "Apple"]
-3.14
-iex> tl [3.14, :pie, "Apple"]
-[:pie, "Apple"]
+hd [3.14, :pie, "Apple"]
+tl [3.14, :pie, "Apple"]
 ```
 
 In addition to the aforementioned functions, you can use [pattern matching](/en/lessons/basics/pattern_matching) and the cons operator `|` to split a list into head and tail. We'll learn more about this pattern in later lessons:
 
 ```elixir
-iex> [head | tail] = [3.14, :pie, "Apple"]
-[3.14, :pie, "Apple"]
-iex> head
-3.14
-iex> tail
-[:pie, "Apple"]
+[head | tail] = [3.14, :pie, "Apple"]
+head
+tail
 ```
 
 ## Tuples
@@ -103,16 +85,15 @@ This makes accessing their length fast but modification expensive; the new tuple
 Tuples are defined with curly braces:
 
 ```elixir
-iex> {3.14, :pie, "Apple"}
 {3.14, :pie, "Apple"}
 ```
 
 It is common for tuples to be used as a mechanism to return additional information from functions; the usefulness of this will be more apparent when we get into [pattern matching](/en/lessons/basics/pattern_matching):
 
 ```elixir
-iex> File.read("path/to/existing/file")
+File.read("path/to/existing/file")
 {:ok, "... contents ..."}
-iex> File.read("path/to/unknown/file")
+File.read("path/to/unknown/file")
 {:error, :enoent}
 ```
 
@@ -122,9 +103,6 @@ Keyword lists and maps are the associative collections of Elixir.
 In Elixir, a keyword list is a special list of two-element tuples whose first element is an atom; they share performance with lists:
 
 ```elixir
-iex> [foo: "bar", hello: "world"]
-[foo: "bar", hello: "world"]
-iex> [{:foo, "bar"}, {:hello, "world"}]
 [foo: "bar", hello: "world"]
 ```
 
@@ -143,55 +121,45 @@ Unlike keyword lists, they allow keys of any type and are un-ordered.
 You can define a map with the `%{}` syntax:
 
 ```elixir
-iex> map = %{:foo => "bar", "hello" => :world}
-%{:foo => "bar", "hello" => :world}
-iex> map[:foo]
-"bar"
-iex> map["hello"]
-:world
+map = %{:foo => "bar", "hello" => :world}
+map[:foo]
+map["hello"]
 ```
 
 As of Elixir 1.2, variables are allowed as map keys:
 
 ```elixir
-iex> key = "hello"
-"hello"
-iex> %{key => "world"}
-%{"hello" => "world"}
+key = "hello"
+%{key => "world"}
 ```
 
 If a duplicate is added to a map, it will replace the former value:
 
 ```elixir
-iex> %{:foo => "bar", :foo => "hello world"}
-%{foo: "hello world"}
+%{:foo => "bar", :foo => "hello world"}
 ```
 
 As we can see from the output above, there is a special syntax for maps containing only atom keys:
 
 ```elixir
-iex> %{foo: "bar", hello: "world"}
 %{foo: "bar", hello: "world"}
-iex> %{foo: "bar", hello: "world"} == %{:foo => "bar", :hello => "world"}
+%{foo: "bar", hello: "world"}
+%{foo: "bar", hello: "world"} == %{:foo => "bar", :hello => "world"}
 true
 ```
 
 In addition, there is a special syntax you can use with atom keys:
 
 ```elixir
-iex> map = %{foo: "bar", hello: "world"}
-%{foo: "bar", hello: "world"}
-iex> map.hello
-"world"
+map = %{foo: "bar", hello: "world"}
+map.hello
 ```
 
 Another interesting property of maps is that they provide their own syntax for updates (note: this creates a new map):
 
 ```elixir
-iex> map = %{foo: "bar", hello: "world"}
-%{foo: "bar", hello: "world"}
-iex> %{map | foo: "baz"}
-%{foo: "baz", hello: "world"}
+map = %{foo: "bar", hello: "world"}
+%{map | foo: "baz"}
 ```
 
 **Note**: this syntax only works for updating a key that already exists in the map! If the key does not exist, a `KeyError` will be raised.
@@ -199,13 +167,6 @@ iex> %{map | foo: "baz"}
 To create a new key, instead use [`Map.put/3`](https://hexdocs.pm/elixir/Map.html#put/3)
 
 ```elixir
-iex> map = %{hello: "world"}
-%{hello: "world"}
-iex> %{map | foo: "baz"}
-** (KeyError) key :foo not found in: %{hello: "world"}
-    (stdlib) :maps.update(:foo, "baz", %{hello: "world"})
-    (stdlib) erl_eval.erl:259: anonymous fn/2 in :erl_eval.expr/5
-    (stdlib) lists.erl:1263: :lists.foldl/3
-iex> Map.put(map, :foo, "baz")
-%{foo: "baz", hello: "world"}
+map = %{hello: "world"}
+Map.put(map, :foo, "baz")
 ```
